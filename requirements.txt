@@ -1,0 +1,25 @@
+# Core Dependencies
+streamlit==1.31.0
+python-dotenv==1.0.1
+
+# PDF Processing
+PyPDF2==3.0.1
+pdfplumber==0.10.3
+
+# Firebase
+firebase-admin==6.4.0
+
+# Embeddings & Vector Search
+openai==1.12.0
+sentence-transformers==2.3.1
+faiss-cpu==1.7.4
+numpy==1.24.3
+
+# Text Processing
+langchain==0.1.6
+langchain-community==0.0.20
+tiktoken==0.5.2
+
+# Utilities
+tqdm==4.66.1
+pandas==2.0.3
