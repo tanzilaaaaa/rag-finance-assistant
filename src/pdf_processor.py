@@ -7,7 +7,7 @@ import re
 from typing import List, Dict
 import PyPDF2
 import pdfplumber
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from config import Config
 
 

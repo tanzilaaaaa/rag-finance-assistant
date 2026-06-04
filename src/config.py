@@ -17,6 +17,8 @@ class Config:
     
     # Firebase Configuration
     FIREBASE_KEY_PATH = os.getenv("FIREBASE_KEY_PATH", "firebase-key.json")
+    USE_LOCAL_STORAGE = os.getenv("USE_LOCAL_STORAGE", "true").lower() == "true"
+    LOCAL_STORAGE_DIR = os.getenv("LOCAL_STORAGE_DIR", "vector_database")
     
     # Model Configuration
     EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
@@ -49,8 +51,8 @@ class Config:
         if not cls.USE_FREE_EMBEDDING and not cls.OPENAI_API_KEY:
             errors.append("OPENAI_API_KEY is required (or set USE_FREE_EMBEDDING=true)")
         
-        if not os.path.exists(cls.FIREBASE_KEY_PATH):
-            errors.append(f"Firebase key file not found: {cls.FIREBASE_KEY_PATH}")
+        if not cls.USE_LOCAL_STORAGE and not os.path.exists(cls.FIREBASE_KEY_PATH):
+            errors.append(f"Firebase key file not found: {cls.FIREBASE_KEY_PATH} (or set USE_LOCAL_STORAGE=true)")
         
         if errors:
             raise ValueError("Configuration errors:\n" + "\n".join(f"  - {e}" for e in errors))
@@ -68,6 +70,8 @@ class Config:
     def display_config(cls):
         """Display current configuration (for debugging)"""
         return {
+            "Storage Type": "Local JSON" if cls.USE_LOCAL_STORAGE else "Firebase Firestore",
+            "Storage Location": cls.LOCAL_STORAGE_DIR if cls.USE_LOCAL_STORAGE else "Firebase Cloud",
             "Embedding Model": cls.get_embedding_model_name(),
             "LLM Model": cls.LLM_MODEL,
             "Chunk Size": cls.CHUNK_SIZE,

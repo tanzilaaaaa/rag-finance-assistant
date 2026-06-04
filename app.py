@@ -17,6 +17,7 @@ from config import Config
 from pdf_processor import PDFProcessor
 from embeddings import EmbeddingGenerator
 from vector_store import VectorStore
+from local_vector_store import LocalVectorStore
 from retriever import SemanticRetriever
 from llm_handler import LLMHandler
 
@@ -88,8 +89,15 @@ def initialize_system():
             # Validate configuration
             Config.validate()
             
-            # Initialize components
-            st.session_state.vector_store = VectorStore()
+            # Initialize vector store (Local or Firebase)
+            if Config.USE_LOCAL_STORAGE:
+                st.session_state.vector_store = LocalVectorStore(Config.LOCAL_STORAGE_DIR)
+                st.info("📁 Using Local JSON Storage")
+            else:
+                st.session_state.vector_store = VectorStore()
+                st.info("☁️ Using Firebase Firestore")
+            
+            # Initialize other components
             st.session_state.embedding_generator = EmbeddingGenerator()
             st.session_state.retriever = SemanticRetriever(
                 st.session_state.vector_store,
