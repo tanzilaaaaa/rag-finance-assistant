@@ -109,48 +109,6 @@ Enter questions like:
 4. how to do business valuation?
 5. what is putting all eggs in one basket analogy?
 
-## Configuration
-
-### Chunking Strategy
-- Chunk size: 1000 tokens (adjustable)
-- Overlap: 200 tokens
-- Method: Recursive character splitting with semantic boundaries
-
-### Embedding Model
-- Default: OpenAI `text-embedding-3-small`
-- Alternative: `sentence-transformers/all-MiniLM-L6-v2` (free)
-
-### LLM Model
-- Default: OpenAI `gpt-3.5-turbo`
-- Alternative: `gpt-4` for better quality
-
-## Firebase Schema
-
-### Collection: `investment_chunks`
-```json
-{
-  "chunk_id": "unique_id",
-  "text": "chunk content",
-  "embedding": [0.123, -0.456, ...],
-  "metadata": {
-    "source": "book_name.pdf",
-    "page": 42,
-    "chunk_index": 15
-  },
-  "created_at": "timestamp"
-}
-```
-
-## Development
-
-### Code Structure
-- `pdf_processor.py`: Handles PDF extraction and intelligent chunking
-- `embeddings.py`: Manages embedding generation (OpenAI/HuggingFace)
-- `vector_store.py`: Firebase CRUD operations
-- `retriever.py`: Implements semantic search and ranking
-- `llm_handler.py`: LLM query and response generation
-- `app.py`: Streamlit UI and orchestration
-
 ## Data Privacy & Ethics
 ⚠️ **Important Notes:**
 - Source material is for educational use only
@@ -167,19 +125,5 @@ This system fulfills all requirements:
 - ✅ Response generation for mandatory queries
 - ✅ Video recording ready interface
 
-## Troubleshooting
-
-### Common Issues
-1. **Firebase connection error**: Verify `firebase-key.json` path
-2. **OpenAI API error**: Check API key in `.env`
-3. **Memory error during PDF processing**: Reduce chunk size
-4. **Slow embedding generation**: Consider using batch processing
-
 ## License
 Educational use only - Assignment for Stock Market & Investment Analysis course
-
-## Author
-Name: [Your Name]
-Roll Number: [Your Roll Number]
-Instructor: Achint Setia
-Date: March 5, 2026
